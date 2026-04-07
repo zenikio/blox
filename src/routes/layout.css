@@ -1,0 +1,338 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&family=Sorts+Mill+Goudy:ital@0;1&display=swap');
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+/* 1. Google Fonts Import (Sans & Serifs) */
+
+@plugin 'daisyui' {
+	themes:
+		light --default,
+		dark --prefersdark;
+}
+
+/* 2. Define the "Clever" Swatches as Custom CSS Properties */
+:root {
+	/* Clever Grayscale */
+	--swatch-gray-000: #ffffff;
+	--swatch-gray-050: #faf9f5;
+	--swatch-gray-100: #f5f4ed;
+	--swatch-gray-150: #f0eee6;
+	--swatch-gray-200: #e8e6dc;
+	--swatch-gray-250: #dedcd1;
+	--swatch-gray-300: #d1cfc5;
+	--swatch-gray-350: #c2c0b6;
+	--swatch-gray-400: #b0aea5;
+	--swatch-gray-450: #9c9a92;
+	--swatch-gray-500: #87867f;
+	--swatch-gray-550: #73726c;
+	--swatch-gray-600: #5e5d59;
+	--swatch-gray-650: #4d4c48;
+	--swatch-gray-700: #3d3d3a;
+	--swatch-gray-750: #30302e;
+	--swatch-gray-800: #262624;
+	--swatch-gray-850: #1f1e1d;
+	--swatch-gray-900: #1a1918;
+	--swatch-gray-950: #141413;
+
+	/* Clever Accents */
+	--swatch-oat: #e3dacc;
+	--swatch-olive: #788c5d;
+	--swatch-cactus: #bcd1ca;
+	--swatch-sky: #6a9bcc;
+	--swatch-heather: #cbcadb;
+	--swatch-fig: #c46686;
+	--swatch-coral: #ebcece;
+	--swatch-clay: #d97757;
+	/*--swatch-clay-interactive: #c96442;*/
+	--swatch-clay-interactive: #e16441;
+	--error-text: #b53333;
+}
+
+/* 3. Map to DaisyUI Light Theme */
+@plugin 'daisyui/theme' {
+	name: 'light';
+	default: true;
+	color-scheme: light;
+
+	/* Backgrounds */
+	--color-base-100: var(--swatch-gray-000);
+	--color-base-200: var(--swatch-gray-100);
+	--color-base-300: var(--swatch-gray-200);
+	--color-base-content: var(--swatch-gray-950);
+
+	/* Accents */
+	--color-primary: var(--swatch-clay-interactive);
+	--color-primary-content: var(--swatch-gray-050);
+	--color-secondary: var(--swatch-sky);
+	--color-secondary-content: var(--swatch-gray-050);
+	--color-accent: var(--swatch-olive);
+	--color-accent-content: var(--swatch-gray-050);
+	--color-neutral: var(--swatch-gray-850);
+	--color-neutral-content: var(--swatch-gray-050);
+
+	/* Status Colors */
+	--color-info: oklch(70% 0.2 220);
+	--color-info-content: oklch(98% 0.01 220);
+	--color-success: oklch(65% 0.25 140);
+	--color-success-content: oklch(98% 0.01 140);
+	--color-warning: oklch(80% 0.25 80);
+	--color-warning-content: oklch(20% 0.05 80);
+	--color-error: var(--error-text);
+	--color-error-content: var(--swatch-gray-050);
+
+	/* Border Radius */
+	--radius-selector: 0.5rem;
+	--radius-field: 0.5rem;
+	--radius-box: 0.75rem;
+
+	/* Base Sizes */
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+
+	/* Effects */
+	--border: 0.0625rem;
+	--depth: 0;
+	--noise: 0;
+
+	/* Button Outline Semantic Colors */
+	--color-btn-outline-text: var(--swatch-gray-600);
+	--color-btn-outline-border: var(--swatch-gray-300);
+	--color-btn-outline-hover-text: var(--swatch-gray-950);
+}
+
+/* 4. Map to DaisyUI Dark Theme (Inverted clever mappings) */
+@plugin 'daisyui/theme' {
+	name: 'dark';
+	default: true;
+	color-scheme: dark;
+
+	/* Backgrounds */
+	--color-base-100: var(--swatch-gray-950);
+	--color-base-200: var(--swatch-gray-900);
+	--color-base-300: var(--swatch-gray-850);
+	--color-base-content: var(--swatch-gray-050);
+
+	/* Accents */
+	--color-primary: var(--swatch-clay-interactive);
+	--color-primary-content: var(--swatch-gray-950);
+	--color-secondary: var(--swatch-sky);
+	--color-secondary-content: var(--swatch-gray-950);
+	--color-accent: var(--swatch-olive);
+	--color-accent-content: var(--swatch-gray-950);
+	--color-neutral: var(--swatch-gray-200);
+	--color-neutral-content: var(--swatch-gray-900);
+
+	/* Status Colors */
+	--color-info: oklch(70% 0.2 220);
+	--color-info-content: oklch(98% 0.01 220);
+	--color-success: oklch(65% 0.25 140);
+	--color-success-content: oklch(98% 0.01 140);
+	--color-warning: oklch(80% 0.25 80);
+	--color-warning-content: oklch(20% 0.05 80);
+	--color-error: var(--error-text);
+	--color-error-content: var(--swatch-gray-950);
+
+	/* Border Radius */
+	--radius-selector: 0.5rem;
+	--radius-field: 0.5rem;
+	--radius-box: 0.75rem;
+
+	/* Base Sizes */
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+
+	/* Effects */
+	--border: 0.0625rem;
+	--depth: 0;
+	--noise: 0;
+
+	/* Button Outline Semantic Colors */
+	--color-btn-outline-text: var(--swatch-gray-400);
+	--color-btn-outline-border: var(--swatch-gray-700);
+	--color-btn-outline-hover-text: var(--swatch-gray-050);
+}
+
+/* 5. Register Fonts in Tailwind v4 */
+@theme inline {
+	--font-sans: 'Manrope', sans-serif;
+	--font-manrope: 'Manrope', sans-serif;
+
+	--font-serif: 'Sorts Mill Goudy', serif;
+	--font-goudy: 'Sorts Mill Goudy', serif;
+}
+
+/* Retain your base layer and custom utilities below... */
+
+@layer base {
+	html {
+		@apply font-sans;
+	}
+}
+
+@layer components {
+	/* Component specific CSS variables (Uncomment to customize) */
+	/*
+	.alert { --alert-color: ; }
+	.badge { --badge-color: ; --size: ; }
+	.btn { --btn-color: ; --btn-fg: ; --btn-shadow: ; --btn-noise: ; --btn-p: ; --size: ; }
+	.card { --card-p: ; --card-fs: ; --cardtitle-fs: ; }
+	.checkbox { --size: ; }
+	.countdown { --value: ; --digits: ; }
+	.divider { --divider-m: ; }
+	.dropdown { --anchor-v: ; --anchor-h: ; }
+	.file-input { --input-color: ; --size: ; }
+	.hover-3d { --ease: ; --shadow: ; --shine: ; --transform: ; }
+	.hover-gallery { --items: ; }
+	.indicator { --indicator-t: ; --indicator-b: ; --indicator-s: ; --indicator-e: ; --indicator-y: ; --indicator-x: ; }
+	.input { --input-color: ; --size: ; --font-size: ; }
+	.kbd { --size: ; }
+	.list { --list-grid-cols: ; }
+	.menu { --menu-active-fg: ; --menu-active-bg: ; }
+	.modal { --modal-tl: ; --modal-tr: ; --modal-bl: ; --modal-br: ; }
+	.radial-progress { --value: ; --size: ; --thickness: ; --radialprogress: ; }
+	.radio { --size: ; }
+	.range { --range-bg: ; --range-thumb: ; --range-thumb-size: ; --range-progress: ; --range-fill: ; --range-p: ; --size: ; }
+	.select { --input-color: ; --size: ; }
+	.tab { --tabs-height: ; --tabs-direction: ; --tab-p: ; --tab-bg: ; --tab-border-color: ; --tab-radius-ss: ; --tab-radius-se: ; --tab-radius-es: ; --tab-radius-ee: ; --tab-order: ; --tab-radius-min: ; --tab-paddings: ; --tab-border-colors: ; --tab-corner-width: ; --tab-corner-height: ; --tab-corner-position: ; --tab-inset: ; --radius-start: ; --radius-end: ; --tabcontent-margin: ; --tabcontent-radius-ss: ; --tabcontent-radius-se: ; --tabcontent-radius-es: ; --tabcontent-radius-ee: ; --tabcontent-order: ; }
+	.text-rotate { --items: ; --duration: ; --first-item-position: ; }
+	.textarea { --input-color: ; --size: ; --font-size: ; }
+	.timeline { --timeline-row-start: ; --timeline-row-end: ; --timeline-col-start: ; --timeline-col-end: ; }
+	.toast { --toast-x: ; --toast-y: ; }
+	.toggle { --toggle-p: ; --size: ; }
+	.tooltip { --tt-bg: ; --tt-off: ; --tt-tailw: ; }
+	.glass { --glass-blur: ; --glass-opacity: ; --glass-reflect-degree: ; --glass-reflect-opacity: ; --glass-border-opacity: ; --glass-text-shadow-opacity: ; }
+	.join { --join-ss: ; --join-se: ; --join-es: ; --join-ee: ; }
+	*/
+}
+
+/* ═══════ Component Customization via Tailwind Utilities ═══════ */
+/*
+daisyUI components can be globally customized in your CSS file using
+Tailwind's @apply directive inside @utility.
+Uncomment to override default component styles across your app:
+
+*/
+
+/* Clever 'Tertiary' (Outline) Button Styles */
+
+@utility btn {
+	@apply rounded-xl;
+}
+
+@utility input {
+  @apply transition-shadow duration-300 ease-in-out;
+
+  &:focus,
+  &:focus-within {
+    @apply outline-none ring-2 ring-primary/40 border-primary;
+  }
+}
+
+@utility focus-ring {
+  @apply transition-shadow duration-300 ease-in-out;
+
+  &:focus,
+  &:focus-within {
+    @apply outline-none ring-2 ring-primary/40;
+  }
+}
+
+/* focus:outline-none focus:shadow-none */
+
+@utility btn-outline {
+	background-color: transparent;
+	color: var(--color-btn-outline-text);
+	border-color: var(--color-btn-outline-border);
+
+	&:hover {
+		background-color: var(--color-btn-outline-border);
+		color: var(--color-btn-outline-hover-text);
+		border-color: var(--color-btn-outline-border);
+	}
+}
+
+@utility badge-outline {
+	background-color: transparent;
+	color: var(--color-btn-outline-text);
+	border-color: var(--color-btn-outline-border);
+}
+
+@utility footer {
+	@apply border-t border-base-300;
+}
+
+@utility sidebar-link {
+	@apply w-full gap-3 rounded-lg text-sm font-medium text-base-content/70 transition-colors hover:bg-base-200 hover:text-base-content active:bg-primary/20 active:text-primary;
+}
+
+@utility sidebar-link-active {
+	@apply bg-primary/15 text-primary hover:bg-primary/20;
+}
+
+@utility unimob-logo {
+	@apply flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-xl font-bold text-primary-content;
+}
+
+@utility dropdown-item {
+	@apply gap-3 text-sm;
+}
+
+@utility dropdown-item {
+	@apply flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm text-base-content/80 transition-colors hover:bg-base-200 hover:text-base-content active:bg-primary/20 active:text-primary;
+}
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+/* ═══════ Dock Navigation ═══════ */
+.dock {
+	@apply bg-base-200 border-t border-base-300;
+	display: flex;
+	justify-content: space-around;
+	align-items: center;
+	padding: 0.5rem 0;
+	padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+}
+
+.dock button {
+	@apply flex flex-col items-center gap-1 px-4 py-2 rounded-lg transition-colors;
+	min-width: 64px;
+	min-height: 44px;
+	color: var(--swatch-gray-500);
+}
+
+.dock button:hover {
+	@apply bg-base-300;
+}
+
+.dock button.dock-active {
+	color: var(--swatch-clay-interactive);
+}
+
+.dock-label {
+	@apply text-xs font-medium;
+}
+
+/* ═══════ Custom thin scrollbar ═══════ */
+* {
+	scrollbar-width: thin;
+	scrollbar-color: hsl(0 0% 50% / 0.15) transparent;
+}
+
+*::-webkit-scrollbar {
+	width: 5px;
+	height: 5px;
+}
+
+*::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+	background: hsl(0 0% 50% / 0.15);
+	border-radius: 9999px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+	background: hsl(0 0% 50% / 0.3);
+}
+
