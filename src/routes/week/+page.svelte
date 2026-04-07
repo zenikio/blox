@@ -112,33 +112,33 @@
   let maxCount = $derived(Math.max(...blockCounts.map(b => b.count), 1));
 </script>
 
-<div class="p-4">
-  <div class="flex items-center justify-between mb-6">
+<div class="p-4 sm:p-6 lg:p-8">
+  <div class="flex items-center justify-between mb-6 lg:mb-8">
     <button onclick={prevWeek} class="p-2 text-[#888888] hover:text-[#f5f5f5]">
-      <CaretLeft size={24} />
+      <CaretLeft size={24} class="sm:w-7 sm:h-7" />
     </button>
-    <span class="text-lg font-medium">{formatWeekRange(currentWeek)}</span>
+    <span class="text-lg sm:text-xl lg:text-2xl font-medium">{formatWeekRange(currentWeek)}</span>
     <button onclick={nextWeek} class="p-2 text-[#888888] hover:text-[#f5f5f5]">
-      <CaretRight size={24} />
+      <CaretRight size={24} class="sm:w-7 sm:h-7" />
     </button>
   </div>
   
-  <div class="bg-[#111111] rounded-xl p-4 mb-6" style="height: 240px;">
+  <div class="bg-[#111111] rounded-xl p-4 sm:p-6 mb-6 lg:mb-8" style="height: 240px;">
     <canvas bind:this={chartCanvas}></canvas>
   </div>
   
-  <div class="mb-6">
-    <h3 class="text-sm font-medium text-[#888888] mb-3">Block Breakdown</h3>
-    <div class="space-y-3">
+  <div class="mb-6 lg:mb-8">
+    <h3 class="text-sm sm:text-base font-medium text-[#888888] mb-3 lg:mb-4">Block Breakdown</h3>
+    <div class="space-y-3 lg:space-y-4">
       {#each blockCounts as { blockId, count }}
         {@const block = getBlockById(blockId)}
         {#if block}
           <div>
             <div class="flex justify-between items-center mb-1">
-              <span class="text-sm">{block.name}</span>
-              <span class="text-sm text-[#888888]">{count}</span>
+              <span class="text-sm sm:text-base">{block.name}</span>
+              <span class="text-sm sm:text-base text-[#888888]">{count}</span>
             </div>
-            <div class="h-1 bg-[#1a1a1a] rounded-full overflow-hidden">
+            <div class="h-1 sm:h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden">
               <div
                 class="h-full rounded-full"
                 style="width: {(count / maxCount) * 100}%; background-color: {block.color};"
@@ -151,19 +151,20 @@
   </div>
   
   <div>
-    <h3 class="text-sm font-medium text-[#888888] mb-3">Non-Negotiables</h3>
-    <div class="space-y-3">
+    <h3 class="text-sm sm:text-base font-medium text-[#888888] mb-3 lg:mb-4">Non-Negotiables</h3>
+    <div class="space-y-3 lg:space-y-4">
       {#each nonNegGrid as { blockId, days }}
         {@const block = getBlockById(blockId)}
         {#if block}
-          <div class="flex items-center gap-3">
-            <span class="text-sm w-32 flex-shrink-0">{block.name}</span>
-            <div class="flex gap-2">
+          <div class="flex items-center gap-3 sm:gap-4">
+            <span class="text-sm sm:text-base w-32 sm:w-40 flex-shrink-0">{block.name}</span>
+            <div class="flex gap-2 sm:gap-3">
               {#each days as done}
                 <Circle
                   size={16}
                   weight={done ? 'fill' : 'regular'}
                   style="color: {done ? block.color : '#333333'};"
+                  class="sm:w-5 sm:h-5"
                 />
               {/each}
             </div>

@@ -72,12 +72,12 @@
   
   <!-- High Energy -->
   {#if highEnergy.length > 0}
-    <div class="space-y-3">
+    <div class="space-y-3 lg:space-y-4">
       <div class="flex items-center gap-2 text-base-content/50">
-        <Lightning size={20} weight="fill" />
-        <span class="text-xs font-bold uppercase tracking-wider">High Energy</span>
+        <Lightning size={20} weight="fill" class="sm:w-6 sm:h-6" />
+        <span class="text-xs sm:text-sm font-bold uppercase tracking-wider">High Energy</span>
       </div>
-      <div class="space-y-2">
+      <div class="space-y-2 lg:space-y-3">
         {#each highEnergy as block}
           <BlockButton {block} count={todayCounts[block.id] || 0} />
         {/each}
@@ -87,12 +87,12 @@
   
   <!-- Medium Energy -->
   {#if mediumEnergy.length > 0}
-    <div class="space-y-3">
+    <div class="space-y-3 lg:space-y-4">
       <div class="flex items-center gap-2 text-base-content/50">
-        <BatteryCharging size={20} weight="fill" />
-        <span class="text-xs font-bold uppercase tracking-wider">Medium Energy</span>
+        <BatteryCharging size={20} weight="fill" class="sm:w-6 sm:h-6" />
+        <span class="text-xs sm:text-sm font-bold uppercase tracking-wider">Medium Energy</span>
       </div>
-      <div class="space-y-2">
+      <div class="space-y-2 lg:space-y-3">
         {#each mediumEnergy as block}
           <BlockButton {block} count={todayCounts[block.id] || 0} />
         {/each}
@@ -102,12 +102,12 @@
   
   <!-- Low Energy -->
   {#if lowEnergy.length > 0}
-    <div class="space-y-3">
+    <div class="space-y-3 lg:space-y-4">
       <div class="flex items-center gap-2 text-base-content/50">
-        <BatteryCharging size={20} />
-        <span class="text-xs font-bold uppercase tracking-wider">Low Energy</span>
+        <BatteryCharging size={20} class="sm:w-6 sm:h-6" />
+        <span class="text-xs sm:text-sm font-bold uppercase tracking-wider">Low Energy</span>
       </div>
-      <div class="space-y-2">
+      <div class="space-y-2 lg:space-y-3">
         {#each lowEnergy as block}
           <BlockButton {block} count={todayCounts[block.id] || 0} />
         {/each}
@@ -116,8 +116,8 @@
   {/if}
   
   <!-- Add Block Button -->
-  <a href="/blocks/new" class="btn btn-outline btn-lg btn-block gap-2 py-4" style="min-height: 56px;">
-    <Plus size={22} />
-    <span class="font-medium">Add Custom Block</span>
+  <a href="/blocks/new" class="btn btn-outline btn-lg btn-block gap-2 py-4 sm:py-5" style="min-height: 56px;">
+    <Plus size={22} class="sm:w-6 sm:h-6" />
+    <span class="font-medium sm:text-lg">Add Custom Block</span>
   </a>
 </div>

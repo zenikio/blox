@@ -36,25 +36,25 @@
   }
 </script>
 
-<div class="p-4 space-y-6">
+<div class="p-4 sm:p-6 lg:p-8 space-y-6 lg:space-y-8">
   <div class="flex items-center gap-3">
     <a href="/" class="btn btn-ghost btn-sm btn-circle">
       <ArrowLeft size={20} />
     </a>
-    <h1 class="text-2xl font-bold">Add Custom Block</h1>
+    <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold">Add Custom Block</h1>
   </div>
   
-  <form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }} class="space-y-6">
+  <form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }} class="space-y-6 lg:space-y-8">
     <!-- Name -->
     <label class="form-control">
       <div class="label">
-        <span class="label-text font-medium">Block Name</span>
+        <span class="label-text font-medium sm:text-lg">Block Name</span>
       </div>
       <input
         type="text"
         bind:value={name}
         placeholder="e.g., Deep Work, Exercise, Reading"
-        class="input input-bordered input-lg"
+        class="input input-bordered input-lg sm:text-lg"
         required
       />
     </label>
@@ -62,15 +62,15 @@
     <!-- Energy Level -->
     <div class="form-control">
       <div class="label">
-        <span class="label-text font-medium">Energy Level</span>
+        <span class="label-text font-medium sm:text-lg">Energy Level</span>
       </div>
-      <div class="join join-vertical w-full">
+      <div class="join join-vertical sm:join-horizontal w-full">
         <input
           type="radio"
           name="energy"
           value="high"
           bind:group={energy}
-          class="btn join-item"
+          class="btn join-item sm:text-lg"
           aria-label="High Energy"
         />
         <input
@@ -78,7 +78,7 @@
           name="energy"
           value="medium"
           bind:group={energy}
-          class="btn join-item"
+          class="btn join-item sm:text-lg"
           aria-label="Medium Energy"
         />
         <input
@@ -86,7 +86,7 @@
           name="energy"
           value="low"
           bind:group={energy}
-          class="btn join-item"
+          class="btn join-item sm:text-lg"
           aria-label="Low Energy"
         />
       </div>
@@ -95,9 +95,9 @@
     <!-- Color -->
     <div class="form-control">
       <div class="label">
-        <span class="label-text font-medium">Color</span>
+        <span class="label-text font-medium sm:text-lg">Color</span>
       </div>
-      <div class="grid grid-cols-6 gap-2">
+      <div class="grid grid-cols-6 sm:grid-cols-8 lg:grid-cols-12 gap-2 sm:gap-3">
         {#each colors as c}
           <button
             type="button"
@@ -122,19 +122,19 @@
           class="checkbox checkbox-lg"
         />
         <div>
-          <span class="label-text font-medium">Daily Non-Negotiable</span>
-          <div class="text-sm text-base-content/60">Must complete every day</div>
+          <span class="label-text font-medium sm:text-lg">Daily Non-Negotiable</span>
+          <div class="text-sm sm:text-base text-base-content/60">Must complete every day</div>
         </div>
       </label>
     </div>
     
     <!-- Preview -->
     <div class="card bg-base-200">
-      <div class="card-body p-4">
-        <div class="text-sm font-medium text-base-content/60 mb-2">Preview</div>
+      <div class="card-body p-4 sm:p-6">
+        <div class="text-sm sm:text-base font-medium text-base-content/60 mb-2">Preview</div>
         <button
           type="button"
-          class="btn btn-lg justify-between h-auto py-4"
+          class="btn btn-lg justify-between h-auto py-4 sm:py-5 sm:text-lg"
           style="border-left: 4px solid {color};"
           disabled
         >
@@ -146,7 +146,7 @@
     <!-- Submit -->
     <button
       type="submit"
-      class="btn btn-primary btn-lg btn-block"
+      class="btn btn-primary btn-lg btn-block sm:text-lg"
       disabled={!name.trim() || saving}
     >
       {saving ? 'Adding...' : 'Add Block'}

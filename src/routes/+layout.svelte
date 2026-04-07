@@ -21,32 +21,45 @@
 </script>
 
 <svelte:head>
-  <meta name="viewport" content="viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 </svelte:head>
 
+<div data-theme="dark">
 {#if ready}
-  <div class="min-h-screen bg-base-100" style="padding-bottom: calc(5rem + env(safe-area-inset-bottom));">
+  <div class="min-h-screen bg-base-100 pb-24">
     <div class="mx-auto w-full max-w-md lg:max-w-2xl">
       {@render children()}
     </div>
   </div>
   
-  <div class="dock fixed bottom-0 left-0 right-0 mx-auto w-full max-w-md lg:max-w-2xl">
-    <button class="{$page.url.pathname === '/' ? 'dock-active' : ''}" onclick={() => navigate('/')}>
-      <House size={24} weight={$page.url.pathname === '/' ? 'fill' : 'regular'} />
-      <span class="dock-label">Home</span>
-    </button>
-    <button class="{$page.url.pathname === '/week' ? 'dock-active' : ''}" onclick={() => navigate('/week')}>
-      <ChartBar size={24} weight={$page.url.pathname === '/week' ? 'fill' : 'regular'} />
-      <span class="dock-label">Week</span>
-    </button>
-    <button class="{$page.url.pathname === '/history' ? 'dock-active' : ''}" onclick={() => navigate('/history')}>
-      <ClockCounterClockwise size={24} weight={$page.url.pathname === '/history' ? 'fill' : 'regular'} />
-      <span class="dock-label">History</span>
-    </button>
-  </div>
+  <nav class="nav-bar">
+    <div class="nav-pill">
+      <button 
+        class="nav-item {$page.url.pathname === '/' ? 'nav-active' : ''}" 
+        onclick={() => navigate('/')}
+        aria-label="Home"
+      >
+        <House size={24} weight={$page.url.pathname === '/' ? 'fill' : 'regular'} />
+      </button>
+      <button 
+        class="nav-item {$page.url.pathname === '/week' ? 'nav-active' : ''}" 
+        onclick={() => navigate('/week')}
+        aria-label="Week"
+      >
+        <ChartBar size={24} weight={$page.url.pathname === '/week' ? 'fill' : 'regular'} />
+      </button>
+      <button 
+        class="nav-item {$page.url.pathname === '/history' ? 'nav-active' : ''}" 
+        onclick={() => navigate('/history')}
+        aria-label="History"
+      >
+        <ClockCounterClockwise size={24} weight={$page.url.pathname === '/history' ? 'fill' : 'regular'} />
+      </button>
+    </div>
+  </nav>
 {:else}
   <div class="min-h-screen bg-base-100 flex items-center justify-center">
     <span class="loading loading-spinner loading-lg"></span>
   </div>
 {/if}
+</div>

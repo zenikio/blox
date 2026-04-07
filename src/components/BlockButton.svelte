@@ -16,10 +16,10 @@
 
 <button
   onclick={handleTap}
-  class="btn btn-lg justify-between h-auto py-4 px-4 w-full {animating ? 'scale-95' : ''}"
+  class="btn btn-lg justify-between h-auto py-4 px-4 sm:py-5 sm:px-5 w-full {animating ? 'scale-95' : ''}"
   style="border-left: 4px solid {block.color}; min-height: 56px;"
 >
-  <span class="text-left font-medium text-base">{block.name}</span>
+  <span class="text-left font-medium text-base sm:text-lg">{block.name}</span>
   
   {#if count > 0}
     <span class="badge badge-lg font-semibold" style="background-color: {block.color}; color: white; border: none;">
