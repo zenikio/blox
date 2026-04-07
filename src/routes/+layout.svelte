@@ -24,7 +24,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 </svelte:head>
 
-<div data-theme="dark">
 {#if ready}
   <div class="min-h-screen bg-base-100 pb-24">
     <div class="mx-auto w-full max-w-md lg:max-w-2xl">
@@ -62,4 +61,3 @@
     <span class="loading loading-spinner loading-lg"></span>
   </div>
 {/if}
-</div>
