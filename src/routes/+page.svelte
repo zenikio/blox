@@ -1,7 +1,7 @@
 <script>
   import { getBlocks, getTodayCounts, getNonNegStatus, getStreak, getTodayTotal, getDeepWorkMinutes, logBlock } from '$lib/store.svelte.js';
   import { formatDate, formatDuration } from '$lib/utils.js';
-  import { Flame, Lightning, BatteryCharging, CheckCircle, Circle, Plus } from 'phosphor-svelte';
+  import { Flame, Lightning, BatteryCharging, CheckCircle, Circle, Plus, Gear } from 'phosphor-svelte';
   import BlockButton from '../components/BlockButton.svelte';
   
   let blocks = $derived(getBlocks());
@@ -115,9 +115,14 @@
     </div>
   {/if}
   
-  <!-- Add Block Button -->
-  <a href="/blocks/new" class="btn btn-outline btn-lg btn-block gap-2 py-4 sm:py-5" style="min-height: 56px;">
-    <Plus size={22} class="sm:w-6 sm:h-6" />
-    <span class="font-medium sm:text-lg">Add Custom Block</span>
-  </a>
+  <!-- Add/Manage Blocks -->
+  <div class="flex gap-2">
+    <a href="/blocks/new" class="btn btn-outline btn-lg flex-1 gap-2 py-4" style="min-height: 56px;">
+      <Plus size={22} />
+      <span class="font-medium">Add Block</span>
+    </a>
+    <a href="/blocks/manage" class="btn btn-outline btn-lg btn-square" style="min-height: 56px;">
+      <Gear size={22} />
+    </a>
+  </div>
 </div>
