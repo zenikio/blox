@@ -85,3 +85,24 @@ export function getDeepWorkMinutes() {
 export function getToast() {
   return { message: toastMessage, visible: toastVisible };
 }
+
+export async function updateBlock(blockId, updates) {
+  await db.blocks.update(blockId, updates);
+  blocks = await db.blocks.toArray();
+  
+  // Refresh non-neg status if that changed
+  if ('isNonNegotiable' in updates) {
+    nonNegStatus = await getNonNegotiableStatus();
+  }
+}
+
+export async function deleteBlock(blockId) {
+  await db.blockLogs.where('blockId').equals(blockId).delete();
+  await db.blocks.delete(blockId);
+  blocks = await db.blocks.toArray();
+  
+  // Refresh counts and status
+  todayCounts = await getTodayCountPerBlock();
+  nonNegStatus = await getNonNegotiableStatus();
+  streak = await getCurrentStreak();
+}

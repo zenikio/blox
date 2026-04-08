@@ -1,98 +1,23 @@
 <script>
   import { onMount } from 'svelte';
   import { getBlocks } from '$lib/store.svelte.js';
-  import { getWeekCountPerDay, getWeekCountPerBlock, getNonNegWeekGrid } from '$lib/db.js';
+  import { getWeekCountPerBlock } from '$lib/db.js';
   import { formatWeekRange } from '$lib/utils.js';
-  import { CaretLeft, CaretRight, Circle } from 'phosphor-svelte';
-  import { startOfWeek, addWeeks, subWeeks, format, isToday } from 'date-fns';
-  import { Chart, BarController, BarElement, CategoryScale, LinearScale } from 'chart.js';
-  
-  Chart.register(BarController, BarElement, CategoryScale, LinearScale);
+  import { CaretLeft, CaretRight } from 'phosphor-svelte';
+  import { addWeeks, subWeeks } from 'date-fns';
+  import WeekBlock from '../../components/WeekBlock.svelte';
   
   let blocks = $derived(getBlocks());
   let currentWeek = $state(new Date());
-  let weekData = $state([]);
   let blockCounts = $state([]);
-  let nonNegGrid = $state([]);
-  let chartCanvas;
-  let chartInstance;
   
   async function loadWeekData() {
-    weekData = await getWeekCountPerDay(currentWeek);
     blockCounts = await getWeekCountPerBlock(currentWeek);
-    nonNegGrid = await getNonNegWeekGrid(currentWeek);
-    
     blockCounts.sort((a, b) => b.count - a.count);
-    
-    if (chartInstance) {
-      updateChart();
-    }
-  }
-  
-  function updateChart() {
-    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const data = weekData.map(d => d.count);
-    const colors = weekData.map(d => {
-      return isToday(new Date(d.date)) ? '#6366f1' : '#1a1a1a';
-    });
-    const borderColors = weekData.map(d => {
-      return isToday(new Date(d.date)) ? '#6366f1' : '#333333';
-    });
-    
-    chartInstance.data.labels = labels;
-    chartInstance.data.datasets[0].data = data;
-    chartInstance.data.datasets[0].backgroundColor = colors;
-    chartInstance.data.datasets[0].borderColor = borderColors;
-    chartInstance.update();
-  }
-  
-  function initChart() {
-    const labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-    const data = weekData.map(d => d.count);
-    const colors = weekData.map(d => {
-      return isToday(new Date(d.date)) ? '#6366f1' : '#1a1a1a';
-    });
-    const borderColors = weekData.map(d => {
-      return isToday(new Date(d.date)) ? '#6366f1' : '#333333';
-    });
-    
-    chartInstance = new Chart(chartCanvas, {
-      type: 'bar',
-      data: {
-        labels,
-        datasets: [{
-          data,
-          backgroundColor: colors,
-          borderColor: borderColors,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { display: false }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            ticks: { color: '#888888', stepSize: 5 },
-            grid: { display: false },
-            border: { color: '#222222' }
-          },
-          x: {
-            ticks: { color: '#888888' },
-            grid: { display: false },
-            border: { color: '#222222' }
-          }
-        }
-      }
-    });
   }
   
   onMount(async () => {
     await loadWeekData();
-    initChart();
   });
   
   async function prevWeek() {
@@ -110,67 +35,40 @@
   }
   
   let maxCount = $derived(Math.max(...blockCounts.map(b => b.count), 1));
+  let totalBlocks = $derived(blockCounts.reduce((sum, b) => sum + b.count, 0));
+  let totalHours = $derived(Math.floor(totalBlocks * 30 / 60));
+  let totalMinutes = $derived((totalBlocks * 30) % 60);
 </script>
 
-<div class="p-4 sm:p-6 lg:p-8">
-  <div class="flex items-center justify-between mb-6 lg:mb-8">
-    <button onclick={prevWeek} class="p-2 text-[#888888] hover:text-[#f5f5f5]">
-      <CaretLeft size={24} class="sm:w-7 sm:h-7" />
+<div class="p-4 pb-6 space-y-6">
+  <!-- Header -->
+  <div class="flex items-center justify-between">
+    <button onclick={prevWeek} class="btn btn-ghost btn-sm btn-circle">
+      <CaretLeft size={24} />
     </button>
-    <span class="text-lg sm:text-xl lg:text-2xl font-medium">{formatWeekRange(currentWeek)}</span>
-    <button onclick={nextWeek} class="p-2 text-[#888888] hover:text-[#f5f5f5]">
-      <CaretRight size={24} class="sm:w-7 sm:h-7" />
+    <span class="text-lg font-semibold">{formatWeekRange(currentWeek)}</span>
+    <button onclick={nextWeek} class="btn btn-ghost btn-sm btn-circle">
+      <CaretRight size={24} />
     </button>
   </div>
   
-  <div class="bg-[#111111] rounded-xl p-4 sm:p-6 mb-6 lg:mb-8" style="height: 240px;">
-    <canvas bind:this={chartCanvas}></canvas>
-  </div>
-  
-  <div class="mb-6 lg:mb-8">
-    <h3 class="text-sm sm:text-base font-medium text-[#888888] mb-3 lg:mb-4">Block Breakdown</h3>
-    <div class="space-y-3 lg:space-y-4">
-      {#each blockCounts as { blockId, count }}
-        {@const block = getBlockById(blockId)}
-        {#if block}
-          <div>
-            <div class="flex justify-between items-center mb-1">
-              <span class="text-sm sm:text-base">{block.name}</span>
-              <span class="text-sm sm:text-base text-[#888888]">{count}</span>
-            </div>
-            <div class="h-1 sm:h-1.5 bg-[#1a1a1a] rounded-full overflow-hidden">
-              <div
-                class="h-full rounded-full"
-                style="width: {(count / maxCount) * 100}%; background-color: {block.color};"
-              ></div>
-            </div>
-          </div>
-        {/if}
-      {/each}
+  <!-- Summary -->
+  <div class="btn btn-lg h-auto p-4 w-full cursor-default">
+    <div class="w-full text-left">
+      <div class="text-3xl font-bold">{totalBlocks}</div>
+      <div class="text-sm text-base-content/60 mt-1">
+        {totalHours}h {totalMinutes}m this week
+      </div>
     </div>
   </div>
   
-  <div>
-    <h3 class="text-sm sm:text-base font-medium text-[#888888] mb-3 lg:mb-4">Non-Negotiables</h3>
-    <div class="space-y-3 lg:space-y-4">
-      {#each nonNegGrid as { blockId, days }}
-        {@const block = getBlockById(blockId)}
-        {#if block}
-          <div class="flex items-center gap-3 sm:gap-4">
-            <span class="text-sm sm:text-base w-32 sm:w-40 flex-shrink-0">{block.name}</span>
-            <div class="flex gap-2 sm:gap-3">
-              {#each days as done}
-                <Circle
-                  size={16}
-                  weight={done ? 'fill' : 'regular'}
-                  style="color: {done ? block.color : '#333333'};"
-                  class="sm:w-5 sm:h-5"
-                />
-              {/each}
-            </div>
-          </div>
-        {/if}
-      {/each}
-    </div>
+  <!-- All Blocks Breakdown -->
+  <div class="space-y-2">
+    {#each blockCounts as { blockId, count }}
+      {@const block = getBlockById(blockId)}
+      {#if block}
+        <WeekBlock {block} {count} {maxCount} />
+      {/if}
+    {/each}
   </div>
 </div>

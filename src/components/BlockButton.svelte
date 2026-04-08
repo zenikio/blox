@@ -1,5 +1,6 @@
 <script>
   import { logBlock } from '$lib/store.svelte.js';
+  import { Asterisk } from 'phosphor-svelte';
   
   let { block, count = 0 } = $props();
   
@@ -16,24 +17,19 @@
 
 <button
   onclick={handleTap}
-  class="btn btn-lg justify-between h-auto py-4 px-4 sm:py-5 sm:px-5 w-full {animating ? 'scale-95' : ''}"
-  style="border-left: 4px solid {block.color}; min-height: 56px;"
+  class="btn btn-lg justify-between h-auto p-4 sm:p-5 w-full"
+  style="border-left: 4px solid {block.color};"
 >
   <span class="text-left font-medium text-base sm:text-lg">{block.name}</span>
   
-  {#if count > 0}
-    <span class="badge badge-lg font-semibold" style="background-color: {block.color}; color: white; border: none;">
-      {count}
-    </span>
-  {/if}
+  <div class="flex items-center gap-2">
+    {#if block.isNonNegotiable}
+      <Asterisk size={20} weight="light" style="color: {block.color};" />
+    {/if}
+    {#if count > 0}
+      <span class="badge badge-base badge-soft">
+        {count}
+      </span>
+    {/if}
+  </div>
 </button>
-
-<style>
-  button {
-    transition: transform 150ms ease;
-  }
-  
-  button.scale-95 {
-    transform: scale(0.98);
-  }
-</style>
