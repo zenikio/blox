@@ -8,17 +8,20 @@
   let editingBlock = $state(null);
   let editName = $state('');
   let editIsNonNeg = $state(false);
+  let editEnergy = $state('medium');
   
   function openEdit(block) {
     editingBlock = block;
     editName = block.name;
     editIsNonNeg = block.isNonNegotiable;
+    editEnergy = block.energy;
   }
   
   function closeEdit() {
     editingBlock = null;
     editName = '';
     editIsNonNeg = false;
+    editEnergy = 'medium';
   }
   
   async function saveEdit() {
@@ -26,7 +29,8 @@
     
     await updateBlock(editingBlock.id, {
       name: editName.trim(),
-      isNonNegotiable: editIsNonNeg
+      isNonNegotiable: editIsNonNeg,
+      energy: editEnergy
     });
     
     closeEdit();
@@ -98,6 +102,17 @@
             class="input input-bordered w-full"
             placeholder="Block name"
           />
+        </div>
+        
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Energy Level</span>
+          </label>
+          <select bind:value={editEnergy} class="select select-bordered w-full">
+            <option value="high">High Energy</option>
+            <option value="medium">Medium Energy</option>
+            <option value="low">Low Energy</option>
+          </select>
         </div>
         
         <div class="form-control">
